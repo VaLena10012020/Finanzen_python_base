@@ -1,6 +1,7 @@
 import onedrivesdk
 from onedrivesdk.helpers import GetAuthCodeServer
-from Utils.credentials import credential
+
+
 # Install with pip install https://github.com/OneDrive/onedrive-sdk-python/archive/master.zip
 
 
