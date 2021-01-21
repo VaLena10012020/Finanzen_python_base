@@ -1,7 +1,6 @@
-import pytest
 import os
-from Utils.credentials import credential
-from Utils.OneDriveConnector import OneDriveConnector
+from finanzen_base.Utils import credential
+from finanzen_base.Utils.OneDriveConnector import OneDriveConnector
 
 
 credentials = credential(filepath='/home/valentin/Projekte/Finanzen', credential_type='onedrive')

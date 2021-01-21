@@ -1,7 +1,4 @@
-import pytest
-import os
-
-from Utils.credentials import credential
+from finanzen_base.Utils import credential
 
 def test_credential_false():
     credentials_false = credential('filepath', 'mail')

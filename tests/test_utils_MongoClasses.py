@@ -1,7 +1,4 @@
-import pytest
-import os
-
-from Utils.MongoClasses import MongoConnect
+from finanzen_base.Utils.MongoClasses import MongoConnect
 
 def test_MongoConnect_vanilla():
     Mongo_class = MongoConnect()
