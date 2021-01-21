@@ -9,7 +9,7 @@ class MongoLogger:
         self.APP_NAME = collection
     
     def write_log(self, logger):
-        logging = {"APP":self.APP_NAME, "Message": logger, "Datetime": datetime.now()}
+        logging = {"APP": self.APP_NAME, "Message": logger, "Datetime": datetime.now()}
         if self.logging_active:
             self.MongoLog.insert_dict(logging)
         else:

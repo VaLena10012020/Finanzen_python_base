@@ -12,11 +12,11 @@ def test_credential_false():
     assert pw == ''
     
 def test_credential_path_test():
-    credentials_true = credential('/home/valentin/Projekte/Finanzen','test')
+    credentials_true = credential('/home/valentin/Projekte/Finanzen','tests')
     assert credentials_true.credential_available == True
     user, pw = credentials_true.get_credentials()
-    assert user == 'test'
-    assert pw == 'test'
+    assert user == 'tests'
+    assert pw == 'tests'
 
 def test_credential_credentialsfalse():
     credentials_false = credential('/home/valentin/Projekte/Finanzen','notavailable')

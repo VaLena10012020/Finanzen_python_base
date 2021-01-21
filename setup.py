@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="Finanzen_base",
+    name="finanzen_base",
     version="0.0.1",
     author="Valentin Kuhn",
     author_email="valentin.gabriel.kuhn@outlook.de",
