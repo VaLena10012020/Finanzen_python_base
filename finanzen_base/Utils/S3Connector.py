@@ -27,7 +27,7 @@ class S3Connector:
         return [bucket["Name"] for bucket in response["Buckets"]]
 
     def list_objects(self, bucket_name, prefix):
-        """Returns a list all objects with specified prefix."""
+        """Returns a list of all objects with specified prefix."""
         response = self.s3client.list_objects(
             Bucket=bucket_name,
             Prefix=prefix,
