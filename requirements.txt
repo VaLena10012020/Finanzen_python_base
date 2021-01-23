@@ -1,5 +1,7 @@
 pymongo
 pandas 
 tabula-py
+pytest
 boto3
+moto
 #git+https://github.com/OneDrive/onedrive-sdk-python/archive/master.zip#onedrivesdk
