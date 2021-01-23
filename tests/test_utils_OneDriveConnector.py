@@ -1,9 +1,9 @@
 import os
-from finanzen_base.Utils import credential
+from finanzen_base.Utils import credentials
 from finanzen_base.Utils.OneDriveConnector import OneDriveConnector
 
 
-credentials = credential(filepath='/home/valentin/Projekte/Finanzen', credential_type='onedrive')
+credentials = credentials(filepath='/home/valentin/Projekte/Finanzen', credential_type='onedrive')
 sec1, sec2 = credentials.get_credentials()
 con = OneDriveConnector(sec1, sec2)
 
