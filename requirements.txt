@@ -1,5 +1,1 @@
-pandas >= 1.2.1
-pytest >= 5.4.3
-boto3 >= 1.15.6
-moto >= 1.3.16
-#git+https://github.com/OneDrive/onedrive-sdk-python/archive/master.zip#onedrivesdk
+-r requirements/prod.txt
