@@ -2,7 +2,6 @@ import setuptools
 from os.path import join, dirname, abspath
 
 
-# Parse requirements.txt for dependencies
 def read_requirements(basename):
     def read_requirement_file(req_file: str):
         req_files = join(dirname(abspath(__file__)), req_file)
