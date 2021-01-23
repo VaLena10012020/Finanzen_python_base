@@ -1,2 +1,2 @@
 # Finanzen_python_base
-Base Dockerimage for python services
+Base package for python services

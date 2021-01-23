@@ -7,7 +7,6 @@ from tempfile import NamedTemporaryFile
 from finanzen_base.Utils.s3connector import S3Connector
 
 
-
 @pytest.fixture
 def aws_credentials():
     """Mocked AWS Credentials for moto."""
