@@ -5,16 +5,8 @@ from boto3 import client
 class S3Connector:
     def __init__(self, bucket_name: str):
         self.bucket_name = bucket_name
-        session = Session()
-        s3_session = session.resource('s3')
         self.s3client = client('s3')
-        self.bucket = s3_session.Bucket(bucket_name)
-
-    def show_bucket_files(self):
-        files = []
-        for s3_file in self.bucket.objects.all():
-            files.append(s3_file.key)
-        return files
+        self.bucket = Session().resource('s3').Bucket(bucket_name)
 
     def download_file(self, filepath: str, target_path: str):
         file = filepath.split("/")[-1]
