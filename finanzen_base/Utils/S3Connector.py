@@ -1,14 +1,14 @@
 from boto3.session import Session
-import boto3
+from boto3 import client
 
 
 class S3Connector:
     def __init__(self, bucket_name: str):
         self.bucket_name = bucket_name
         session = Session()
-        self.s3_session = session.resource('s3')
-        self.s3client = boto3.client('s3')
-        self.bucket = self.s3_session.Bucket(bucket_name)
+        s3_session = session.resource('s3')
+        self.s3client = client('s3')
+        self.bucket = s3_session.Bucket(bucket_name)
 
     def show_bucket_files(self):
         files = []
