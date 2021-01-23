@@ -1,4 +1,4 @@
-from finanzen_base.Utils.MongoClasses import MongoConnect
+from finanzen_base.Utils.mongoclasses import MongoConnect
 from datetime import datetime
 
 
