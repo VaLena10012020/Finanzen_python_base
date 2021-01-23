@@ -16,6 +16,7 @@ class ReqReader():
     def read_requirements(self):
         requirement_txt = read_requirement_file(self.basename)
         install_token = "-r "
+        base_parent_path = self.basename.split("/")[0]
         # Check for external file dependencies and parse all of them
         while any(install_token in req for req in requirement_txt):
             for req in requirement_txt:
@@ -23,10 +24,11 @@ class ReqReader():
                     # Get parent path if necessary
                     file_path = req.split(install_token)[1]
                     if "/" in file_path:
-                        parent_path = file_path.split("/")[0]
-
+                        parent_path = base_parent_path+file_path.split("/")[0]
+                    else:
+                        parent_path = base_parent_path
                     # Get packages of external path
-                    new_requirement = read_requirement_file(req.split(install_token)[1])
+                    new_requirement = read_requirement_file(parent_path+"/"+req.split(install_token)[1])
 
                     # Check for external file dependencies and if necessary add parent path
                     for new_req in new_requirement:
