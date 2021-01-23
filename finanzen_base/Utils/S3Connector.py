@@ -5,8 +5,8 @@ import boto3
 class S3Connector:
     def __init__(self, bucket_name: str):
         self.bucket_name = bucket_name
-        self.session = Session()
-        self.s3_session = self.session.resource('s3')
+        session = Session()
+        self.s3_session = session.resource('s3')
         self.s3client = boto3.client('s3')
         self.bucket = self.s3_session.Bucket(bucket_name)
 
