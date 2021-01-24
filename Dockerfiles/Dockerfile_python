@@ -1,0 +1,10 @@
+FROM python:3.8
+
+ENV PYTHONPATH=/app
+WORKDIR /app
+
+ARG GITHUB_TOKEN
+COPY . /app/
+RUN pip install -r requirements/prod.txt
+
+RUN python setup.py install
