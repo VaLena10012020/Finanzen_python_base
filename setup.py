@@ -14,7 +14,9 @@ def read_requirements(basename):
     for req in requirement_txt:
         if install_token in req:
             # Get packages of external path
-            new_requirement = read_requirement_file(base_path+req.split(install_token)[1])
+            new_requirement = read_requirement_file(
+                base_path+req.split(install_token)[1]
+            )
             # Add parsed dependencies
             requirement_txt.extend(new_requirement)
             requirement_txt.remove(req)
@@ -33,7 +35,8 @@ setuptools.setup(
     version="0.0.1",
     author="Valentin Kuhn",
     author_email="valentin.gabriel.kuhn@outlook.de",
-    description="Base function and classes for setup a Server to gather and show all financial information",
+    description="Base function and classes for setup a Server to gather and "
+                "show all financial information",
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(),

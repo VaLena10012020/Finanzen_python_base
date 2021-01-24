@@ -11,7 +11,8 @@ class S3Connector:
     def download_file(self, filepath: str, target_path: str):
         file = filepath.split("/")[-1]
         path = filepath.split(file)[0]
-        self.s3client.download_file(self.bucket_name, path + file, target_path+file)
+        self.s3client.download_file(self.bucket_name, path + file,
+                                    target_path+file)
 
     def list_buckets(self):
         """Returns a list of bucket names."""
