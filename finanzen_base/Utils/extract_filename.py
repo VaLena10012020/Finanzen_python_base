@@ -7,7 +7,9 @@ def extract_filename(file_path: Union[list, str]) -> dict:
 
     Returns
     ----------
-    dict(file_path: file_name)
+    dict
+        key: file_path
+        value: file_name
     """
     if type(file_path) is not list:
         file_path = [file_path]
