@@ -42,16 +42,18 @@ def test_list_buckets(s3_client, s3_test, bucket_name):
 
 def test_list_objects(s3_client, s3_test, bucket_name):
     file_text = "test"
+    filenames = ["file12", "file22"]
     with NamedTemporaryFile(delete=True, suffix=".txt") as tmp:
         with open(tmp.name, "w", encoding="UTF-8") as f:
             f.write(file_text)
-
-        s3_client.upload_file(tmp.name, bucket_name, "file12")
-        s3_client.upload_file(tmp.name, bucket_name, "file22")
+        for file in filenames:
+            s3_client.upload_file(tmp.name, bucket_name, file)
 
     my_client = S3Connector(bucket_name)
-    objects = my_client.list_objects(bucket_name=bucket_name, prefix="file1")
-    assert objects == ["file12"]
+    objects = my_client.list_objects(bucket_name=bucket_name, prefix="file")
+    assert objects == filenames
+    objects_no_prefix = my_client.list_objects(bucket_name=bucket_name)
+    assert objects_no_prefix == filenames
 
 
 def test_download_file(s3_client, s3_test, bucket_name):
@@ -63,7 +65,7 @@ def test_download_file(s3_client, s3_test, bucket_name):
         for file in filenames:
             s3_client.upload_file(tmp.name, bucket_name, file)
     my_client = S3Connector(bucket_name)
-    _ = my_client.download_file(filenames[0], "")
+    _ = my_client.download_file(filenames[0])
     assert filenames[0] in os.listdir()
     os.remove(filenames[0])
 

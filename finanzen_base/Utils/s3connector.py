@@ -11,7 +11,7 @@ class S3Connector:
         self.s3client = client('s3')
         self.bucket = Session().resource('s3').Bucket(bucket_name)
 
-    def download_file(self, filepath: str, target_path: str):
+    def download_file(self, filepath: str, target_path: str = None):
         """
         Download a single file from S3 to local
 
@@ -21,9 +21,16 @@ class S3Connector:
         """
         file = filepath.split("/")[-1]
         path = filepath.split(file)[0]
-        self.s3client.download_file(self.bucket_name, path + file,
-                                    target_path+file)
-        return target_path+file
+        if target_path:
+            self.s3client.download_file(Bucket=self.bucket_name,
+                                        Key=path + file,
+                                        Filename=target_path + file)
+            return target_path + file
+        else:
+            self.s3client.download_file(Bucket=self.bucket_name,
+                                        Key=path + file,
+                                        Filename=file)
+            return file
 
     def list_buckets(self):
         """
@@ -35,7 +42,7 @@ class S3Connector:
         response = self.s3client.list_buckets()
         return [bucket["Name"] for bucket in response["Buckets"]]
 
-    def list_objects(self, bucket_name: str, prefix: str = ""):
+    def list_objects(self, bucket_name: str, prefix: str = None):
         """
         Returns a list of all objects with specified prefix.
 
@@ -43,13 +50,18 @@ class S3Connector:
         -------
         List of string
         """
-        response = self.s3client.list_objects(
-            Bucket=bucket_name,
-            Prefix=prefix,
-        )
+        if prefix:
+            response = self.s3client.list_objects(
+                Bucket=bucket_name,
+                Prefix=prefix,
+            )
+        else:
+            response = self.s3client.list_objects(
+                Bucket=bucket_name
+            )
         return [object["Key"] for object in response["Contents"]]
 
-    def upload_file(self, filepath: str, target_path: str):
+    def upload_file(self, filepath: str, target_path: str = None):
         """
         Uploading a single file to S3
 
@@ -62,7 +74,11 @@ class S3Connector:
         -------
         None
         """
-        self.s3client.upload_file(Filename=filepath,
-                                  Bucket=self.bucket_name,
-                                  Key=target_path)
-
+        if target_path:
+            self.s3client.upload_file(Filename=filepath,
+                                      Bucket=self.bucket_name,
+                                      Key=target_path)
+        else:
+            self.s3client.upload_file(Filename=filepath,
+                                      Bucket=self.bucket_name,
+                                      Key="")
