@@ -78,5 +78,6 @@ def test_upload_file(s3_client, s3_test, bucket_name):
             f.write(file_text)
         for file in filenames:
             my_client.upload_file(tmp.name, file)
+
     objects = my_client.list_objects(bucket_name=bucket_name, prefix="file")
     assert filenames[0] in objects
