@@ -52,3 +52,30 @@ def test_list_objects(s3_client, s3_test, bucket_name):
     my_client = S3Connector(bucket_name)
     objects = my_client.list_objects(bucket_name=bucket_name, prefix="file1")
     assert objects == ["file12"]
+
+
+def test_download_file(s3_client, s3_test, bucket_name):
+    file_text = "test"
+    filenames = ["file12", "file22"]
+    with NamedTemporaryFile(delete=True, suffix=".txt") as tmp:
+        with open(tmp.name, "w", encoding="UTF-8") as f:
+            f.write(file_text)
+        for file in filenames:
+            s3_client.upload_file(tmp.name, bucket_name, file)
+    my_client = S3Connector(bucket_name)
+    my_client.download_file(filenames[0], "")
+    assert filenames[0] in os.listdir()
+    os.remove(filenames[0])
+
+
+def test_upload_file(s3_client, s3_test, bucket_name):
+    file_text = "test"
+    filenames = ["file12", "file22"]
+    my_client = S3Connector(bucket_name)
+    with NamedTemporaryFile(delete=True, suffix=".txt") as tmp:
+        with open(tmp.name, "w", encoding="UTF-8") as f:
+            f.write(file_text)
+        for file in filenames:
+            my_client.upload_file(tmp.name, file)
+    objects = my_client.list_objects(bucket_name=bucket_name, prefix="file")
+    assert filenames[0] in objects
