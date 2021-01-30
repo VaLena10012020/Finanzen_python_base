@@ -9,7 +9,7 @@ def test_list_of_files():
                           file_paths[2]: "test.csv"}
 
 
-def test_single_file():
+def test_single_file_list():
     file_paths = ["test1/test2/test.csv"]
     file_names = extract_filename(file_paths)
     assert file_names == {file_paths[0]: "test.csv"}
