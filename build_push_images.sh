@@ -15,14 +15,14 @@ docker pull ${ECR_REGISTRY}/${ECR_REPOSITORY}:main || true
 echo "=== Build python and pyjava docker image ==="
 
 docker build --pull=true --cache-from ${ECR_REGISTRY}/${ECR_REPOSITORY}:main \
-  -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:python -f Dockerfiles/Dockerfile_python
+  -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:python -f Dockerfiles/Dockerfile_python .
 
-docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:pyjava -f Dockerfiles/Dockerfile_pyjava
+docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:pyjava -f Dockerfiles/Dockerfile_pyjava .
 
 # to do add test script for docker image
 
 echo "=== Push docker images to AWS ECR ==="
 
-docker push -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:python ${ECR_REGISTRY}/${ECR_REPOSITORY}:${TRAVIS_BRANCH}
+docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:python
 
-docker push -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:pyjava ${ECR_REGISTRY}/${ECR_REPOSITORY}:${TRAVIS_BRANCH}
+docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:pyjava
