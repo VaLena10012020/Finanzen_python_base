@@ -94,12 +94,14 @@ def test_upload_file(s3_client, s3_test, bucket_name):
         with open(tmp.name, "w", encoding="UTF-8") as f:
             f.write(file_text)
         # Case 1 file with default target_path
-        uploaded_files.append(my_client.upload_file(tmp.name))
+        uploaded_files.append(my_client.upload_file(file_path=tmp.name))
         # Case 2 target_path is subdir
-        uploaded_files.append(my_client.upload_file(tmp.name, default_file_path))
+        uploaded_files.append(my_client.upload_file(file_path=tmp.name,
+                                                    target_path=default_file_path))
         # Case 3 target_path is new file name without subdir
         for file in filenames:
-            uploaded_files.append(my_client.upload_file(tmp.name, file))
+            uploaded_files.append(my_client.upload_file(file_path=tmp.name,
+                                                        target_path=file))
 
     objects = my_client.list_objects(bucket_name=bucket_name)
 
@@ -109,4 +111,3 @@ def test_upload_file(s3_client, s3_test, bucket_name):
     assert set(filenames) == set(objects)
     # Check if return of upload file is correct
     assert set(filenames) == set(uploaded_files)
-
