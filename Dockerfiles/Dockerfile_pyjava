@@ -1,4 +1,6 @@
-FROM valena_python
+ARG ECR_REGISTRY
+ARG ECR_REPOSITORY
+FROM ${ECR_REGISTRY}/${ECR_REPOSITORY}:python
 
 # Install JVM
 RUN apt-get update --yes && \
