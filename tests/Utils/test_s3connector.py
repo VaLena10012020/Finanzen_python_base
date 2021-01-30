@@ -107,7 +107,7 @@ def test_upload_file(s3_client, s3_test, bucket_name):
 
     # Append name of temp file to filenames
     filenames.extend([tmp_file_path.split("/")[-1], tmp_file_path])
-    # Check is files are uploaded
+    # Check if files are uploaded
     assert set(filenames) == set(objects)
     # Check if return of upload file is correct
     assert set(filenames) == set(uploaded_files)
