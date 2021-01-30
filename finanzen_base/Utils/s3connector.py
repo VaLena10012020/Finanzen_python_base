@@ -5,7 +5,7 @@ from boto3 import client
 class S3Connector:
     def __init__(self, bucket_name: str):
         """
-        Class for uploading and downloading files to aws S3
+        Class for interacting with AWS S3 buckets
         """
         self.bucket_name = bucket_name
         self.s3client = client('s3')
