@@ -24,15 +24,15 @@ class S3Connector:
         if target_path:
             self.s3client.download_file(Bucket=self.bucket_name,
                                         Key=path + file_name,
-                                        Filename=target_path + file_name)
-            return target_path + file_name
+                                        Filename=target_path + "/" + file_name)
+            return target_path + "/" + file_name
         else:
             self.s3client.download_file(Bucket=self.bucket_name,
                                         Key=path + file_name,
                                         Filename=file_name)
             return file_name
 
-    def list_buckets(self) -> list[str]:
+    def list_buckets(self) -> list:
         """
         Show all buckets in S3
         Returns
@@ -42,7 +42,7 @@ class S3Connector:
         response = self.s3client.list_buckets()
         return [bucket["Name"] for bucket in response["Buckets"]]
 
-    def list_objects(self, bucket_name: str, prefix: str = None) -> list[str]:
+    def list_objects(self, bucket_name: str, prefix: str = None) -> list:
         """
         Returns a list of all objects with specified prefix.
 
@@ -73,7 +73,13 @@ class S3Connector:
             self.s3client.upload_file(Filename=file_path,
                                       Bucket=self.bucket_name,
                                       Key=target_path)
+            return target_path
         else:
+            if "/" in file_path:
+                target_path = file_path.split("/")[-1]
+            else:
+                target_path = file_path
             self.s3client.upload_file(Filename=file_path,
                                       Bucket=self.bucket_name,
-                                      Key="")
+                                      Key=target_path)
+            return target_path

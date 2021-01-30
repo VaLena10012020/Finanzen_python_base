@@ -66,20 +66,47 @@ def test_download_file(s3_client, s3_test, bucket_name):
             s3_client.upload_file(tmp.name, bucket_name, file)
 
     my_client = S3Connector(bucket_name)
+
+    # Test with default value for target_path
     _ = my_client.download_file(filenames[0])
     assert filenames[0] in os.listdir()
+
+    # Test with value for target_path
     os.remove(filenames[0])
+    test_dir = "data"
+    os.mkdir("data")
+    dir_s3 = my_client.download_file(file_path=filenames[0],
+                                     target_path=test_dir)
+    assert dir_s3 == test_dir+"/"+filenames[0]
+    assert [filenames[0]] == os.listdir(test_dir)
+    os.remove(dir_s3)
+    os.rmdir(test_dir)
 
 
 def test_upload_file(s3_client, s3_test, bucket_name):
-    file_text = "test"
     filenames = ["file12", "file22"]
     my_client = S3Connector(bucket_name)
+    uploaded_files = []
+
+    file_text = "test"
     with NamedTemporaryFile(delete=True, suffix=".txt") as tmp:
+        default_file_path = tmp.name
         with open(tmp.name, "w", encoding="UTF-8") as f:
             f.write(file_text)
+        # Case 1 file with default target_path
+        uploaded_files.append(my_client.upload_file(tmp.name))
+        # Case 2 target_path is subdir
+        uploaded_files.append(my_client.upload_file(tmp.name, default_file_path))
+        # Case 3 target_path is new file name without subdir
         for file in filenames:
-            my_client.upload_file(tmp.name, file)
+            uploaded_files.append(my_client.upload_file(tmp.name, file))
 
-    objects = my_client.list_objects(bucket_name=bucket_name, prefix="file")
-    assert filenames[0] in objects
+    objects = my_client.list_objects(bucket_name=bucket_name)
+
+    # Append name of temp file to filenames
+    filenames.extend([default_file_path.split("/")[-1], default_file_path])
+    # Check is files are uploaded
+    assert set(filenames) == set(objects)
+    # Check if return of upload file is correct
+    assert set(filenames) == set(uploaded_files)
+
