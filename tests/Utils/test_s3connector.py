@@ -63,7 +63,7 @@ def test_download_file(s3_client, s3_test, bucket_name):
         for file in filenames:
             s3_client.upload_file(tmp.name, bucket_name, file)
     my_client = S3Connector(bucket_name)
-    my_client.download_file(filenames[0], "")
+    _ = my_client.download_file(filenames[0], "")
     assert filenames[0] in os.listdir()
     os.remove(filenames[0])
 
