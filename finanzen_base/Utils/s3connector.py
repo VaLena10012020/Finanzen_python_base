@@ -35,9 +35,6 @@ class S3Connector:
     def list_buckets(self) -> list:
         """
         Show all buckets in S3
-        Returns
-        -------
-        List of string
         """
         response = self.s3client.list_buckets()
         return [bucket["Name"] for bucket in response["Buckets"]]
@@ -46,9 +43,6 @@ class S3Connector:
         """
         Returns a list of all objects with specified prefix.
 
-        Returns
-        -------
-        List of string
         """
         if prefix:
             response = self.s3client.list_objects(
@@ -64,10 +58,6 @@ class S3Connector:
     def upload_file(self, file_path: str, target_path: str = None) -> None:
         """
         Uploading a single file to S3
-
-        Returns
-        -------
-        None
         """
         if target_path:
             self.s3client.upload_file(Filename=file_path,
