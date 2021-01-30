@@ -90,14 +90,14 @@ def test_upload_file(s3_client, s3_test, bucket_name):
 
     file_text = "test"
     with NamedTemporaryFile(delete=True, suffix=".txt") as tmp:
-        default_file_path = tmp.name
+        tmp_file_path = tmp.name
         with open(tmp.name, "w", encoding="UTF-8") as f:
             f.write(file_text)
         # Case 1 file with default target_path
         uploaded_files.append(my_client.upload_file(file_path=tmp.name))
         # Case 2 target_path is subdir
         uploaded_files.append(my_client.upload_file(file_path=tmp.name,
-                                                    target_path=default_file_path))
+                                                    target_path=tmp_file_path))
         # Case 3 target_path is new file name without subdir
         for file in filenames:
             uploaded_files.append(my_client.upload_file(file_path=tmp.name,
@@ -106,7 +106,7 @@ def test_upload_file(s3_client, s3_test, bucket_name):
     objects = my_client.list_objects(bucket_name=bucket_name)
 
     # Append name of temp file to filenames
-    filenames.extend([default_file_path.split("/")[-1], default_file_path])
+    filenames.extend([tmp_file_path.split("/")[-1], tmp_file_path])
     # Check is files are uploaded
     assert set(filenames) == set(objects)
     # Check if return of upload file is correct
