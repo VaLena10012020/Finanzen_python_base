@@ -4,7 +4,10 @@ ENV PYTHONPATH=/app
 WORKDIR /app
 
 ARG GITHUB_TOKEN
-COPY . /app/
+COPY requirements/common.txt /app/requirements/common.txt
+COPY requirements/prod.txt /app/requirements/prod.txt
 RUN pip install -r requirements/prod.txt
+
+COPY . /app/
 
 RUN python setup.py install
