@@ -1,13 +1,17 @@
-FROM python:3.8
+FROM python:3.8 AS base
 
-ENV PYTHONPATH=/app
-WORKDIR /app
+FROM base as builder
+
+RUN mkdir /install
+
+WORKDIR /tmp
+
+COPY . .
 
 ARG GITHUB_TOKEN
-COPY requirements/common.txt /app/requirements/common.txt
-COPY requirements/prod.txt /app/requirements/prod.txt
-RUN pip install -r requirements/prod.txt
 
-COPY . /app/
+RUN pip install --prefix=/install .
 
-RUN python setup.py install
+FROM base
+
+COPY --from=builder /install /usr/local
