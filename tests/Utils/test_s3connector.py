@@ -54,6 +54,9 @@ def test_list_objects(s3_client, s3_test, bucket_name):
     assert objects == filenames
     objects_no_prefix = my_client.list_objects(bucket_name=bucket_name)
     assert objects_no_prefix == filenames
+    object_not_available = my_client.list_objects(bucket_name=bucket_name,
+                                                  prefix="test")
+    assert object_not_available == []
 
 
 def test_download_file(s3_client, s3_test, bucket_name):

@@ -53,7 +53,11 @@ class S3Connector:
             response = self.s3client.list_objects(
                 Bucket=bucket_name
             )
-        return [object["Key"] for object in response["Contents"]]
+        if "Contents" in response.keys():
+            objects = [object["Key"] for object in response["Contents"]]
+        else:
+            objects = []
+        return objects
 
     def upload_file(self, file_path: str, target_path: str = None) -> None:
         """
