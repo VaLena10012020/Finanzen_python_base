@@ -1,7 +1,8 @@
 from typing import Union
 
 
-def extract_filename(file_path: Union[list, str]) -> dict:
+def extract_filename(file_path: Union[list, str],
+                     file_ext: bool = True) -> dict:
     """
     Takes in a file_path or a list of file paths and returns a dict
 
@@ -19,6 +20,9 @@ def extract_filename(file_path: Union[list, str]) -> dict:
             file_name = single_path
         if file_name == ".":
             file_name = ""
-        file_names[single_path] = file_name
+        if file_ext:
+            file_names[single_path] = file_name
+        else:
+            file_names[single_path] = ".".join(file_name.split(".")[:-1])
 
     return file_names
