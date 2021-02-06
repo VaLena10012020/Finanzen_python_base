@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 
 
-def date_to_ms(date_st: str, date_split: str = "-"):
+def date_to_ms(date_st: str, date_split: str = "-") -> return int:
     date_list = date_st.split(date_split)
     date_obj = datetime(int(date_list[0]),
                         int(date_list[1]),
