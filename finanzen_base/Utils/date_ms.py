@@ -1,9 +1,14 @@
 from datetime import datetime
+from datetime import timezone
 
 
-def date_to_ms(date: str):
-    return datetime.strptime(date, "%Y-%m-%d").timestamp()*1000
+def date_to_ms(date_st: str, date_split: str = "-"):
+    date_list = date_st.split(date_split)
+    date_obj = datetime(int(date_list[0]),
+                        int(date_list[1]),
+                        int(date_list[2]), tzinfo=timezone.utc)
+    return int(date_obj.timestamp() * 1000)
 
 
 def ms_to_date(ms: int):
-    return str(datetime.fromtimestamp(ms/1000.0).date())
+    return str(datetime.utcfromtimestamp(ms/1000.0).date())

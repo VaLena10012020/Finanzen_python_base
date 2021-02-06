@@ -4,9 +4,9 @@ from finanzen_base.Utils.date_ms import date_to_ms
 from finanzen_base.Utils.date_ms import ms_to_date
 
 date_ms_name = "date,ms"
-date_ms = [("2020-01-01", 1577833200000),
-           ("2021-07-12", 1626040800000),
-           ("1970-01-01", -3600000)]
+date_ms = [("2020-01-01", 1577836800000),
+           ("2021-07-12", 1626048000000),
+           ("1970-01-01", 0)]
 
 
 @pytest.mark.parametrize(date_ms_name,
