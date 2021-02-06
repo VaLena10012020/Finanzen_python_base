@@ -9,5 +9,5 @@ def date_to_ms(date_st: str, date_split: str = "-") -> return int:
     return int(date_obj.timestamp() * 1000)
 
 
-def ms_to_date(ms: int):
+def ms_to_date(ms: int) -> str:
     return str(datetime.utcfromtimestamp(ms/1000.0).date())
