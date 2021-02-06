@@ -1,5 +1,4 @@
 from datetime import datetime, timezone
-from datetime import timezone
 
 
 def date_to_ms(date_st: str, date_split: str = "-"):
