@@ -1,9 +1,8 @@
-import time
 from datetime import datetime
 
 
 def date_to_ms(date: str):
-    return int(time.mktime(time.strptime(date, "%Y-%m-%d")) * 1000)
+    return datetime.strptime(date, "%Y-%m-%d").timestamp()*1000
 
 
 def ms_to_date(ms: int):
