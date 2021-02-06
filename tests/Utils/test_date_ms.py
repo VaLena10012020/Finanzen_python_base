@@ -1,7 +1,6 @@
 import pytest
 
 from finanzen_base.Utils.date_ms import date_to_ms, ms_to_date
-from finanzen_base.Utils.date_ms import ms_to_date
 
 date_ms_name = "date,ms"
 date_ms = [("2020-01-01", 1577836800000),
