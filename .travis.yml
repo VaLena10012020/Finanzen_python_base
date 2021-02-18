@@ -14,10 +14,13 @@ script:
 
 deploy:
   skip_cleanup: true
-  provider: script
-  access_key_id: $AWS_ACCESS_KEY_ID
-  secret_access_key: $AWS_SECRET_ACCESS_KEY
-  script: ./build_push_images.sh
-  on:
-    all_branches: true
-
+  - provider: script
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    script: ./build_push_images.sh
+    on:
+      all_branches: true
+  - provider: releases
+    api_key: $GITHUB_TOKEN
+    on:
+      tags: true
