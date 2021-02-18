@@ -11,13 +11,24 @@ install:
 script:
   - flake8
   - pytest
+  - flake8
+
+before_deploy:
+  if branch = master:
+    - git config --local user.name "travis"
+    - git config --local user.email "travis"
+    - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+    - git tag $TRAVIS_TAG
 
 deploy:
   skip_cleanup: true
-  provider: script
-  access_key_id: $AWS_ACCESS_KEY_ID
-  secret_access_key: $AWS_SECRET_ACCESS_KEY
-  script: ./build_push_images.sh
-  on:
-    all_branches: true
-
+  - provider: script
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    script: ./build_push_images.sh
+    on:
+      all_branches: true
+  - provider: releases
+    api_key: $GITHUB_TOKEN
+    on:
+      branch: master
