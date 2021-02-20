@@ -15,6 +15,16 @@ jobs:
         - flake8
         - pytest
 
+    - stage: Image deployment
+      deploy:
+        provider: script
+        skip_cleanup: true
+        access_key_id: $AWS_ACCESS_KEY_ID
+        secret_access_key: $AWS_SECRET_ACCESS_KEY
+        script: ./deployment/build_push_images.sh
+        on:
+          all_branches: true
+
     - stage: Github release
       before_deploy:
         - git config --local user.name "travis"
@@ -23,18 +33,8 @@ jobs:
         - git tag $TRAVIS_TAG
 
       deploy:
-        - provider: releases
-          skip_cleanup: true
-          api_key: $GITHUB_TOKEN
-          on:
-            branch: main
-
-    - stage: Image deployment
-      deploy:
-        - provider: script
-          skip_cleanup: true
-          access_key_id: $AWS_ACCESS_KEY_ID
-          secret_access_key: $AWS_SECRET_ACCESS_KEY
-          script: ./deployment/build_push_images.sh
-          on:
-            all_branches: true
+        provider: releases
+        skip_cleanup: true
+        api_key: $GITHUB_TOKEN
+        on:
+          branch: main
