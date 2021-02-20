@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e # exit immediately in case of error
+set -ev # exit immediately in case of error, verbose mode
 set -x # print all executed commands (=debug mode)
 
 
