@@ -8,26 +8,33 @@ install:
   - pip install -r requirements/dev.txt
   - python setup.py install
 
-script:
-  - flake8
-  - pytest
+jobs:
+  include:
+    - stage: Test
+      script:
+        - flake8
+        - pytest
 
-before_deploy:
-  - git config --local user.name "travis"
-  - git config --local user.email "travis"
-  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
-  - git tag $TRAVIS_TAG
+    - stage: Github release
+      before_deploy:
+        - git config --local user.name "travis"
+        - git config --local user.email "travis"
+        - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+        - git tag $TRAVIS_TAG
 
-deploy:
-  - provider: releases
-    skip_cleanup: true
-    api_key: $GITHUB_TOKEN
-    on:
-      branch: main
-  - provider: script
-    skip_cleanup: true
-    access_key_id: $AWS_ACCESS_KEY_ID
-    secret_access_key: $AWS_SECRET_ACCESS_KEY
-    script: ./deployment/build_push_images.sh
-    on:
-      all_branches: true
+      deploy:
+        - provider: releases
+          skip_cleanup: true
+          api_key: $GITHUB_TOKEN
+          on:
+            branch: main
+
+    - stage: Image deployment
+      deploy:
+        - provider: script
+          skip_cleanup: true
+          access_key_id: $AWS_ACCESS_KEY_ID
+          secret_access_key: $AWS_SECRET_ACCESS_KEY
+          script: ./deployment/build_push_images.sh
+          on:
+            all_branches: true
