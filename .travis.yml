@@ -5,9 +5,9 @@ cache: pip
 
 before_install:
   - pip install awscli
-  - pip install -r requirements/dev.txt
 
 install:
+  - pip install -r requirements/dev.txt
   - python setup.py install
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
         - pytest
 
     - stage: Image deployment
-      before_install: skip
+      install: skip
       script: skip
       deploy:
         provider: script
@@ -31,6 +31,7 @@ jobs:
 
     - stage: Github release
       before_install: skip
+      install: skip
       script: skip
       before_deploy:
         - ./deployment/tag_commit.sh
@@ -39,5 +40,5 @@ jobs:
         provider: releases
         skip_cleanup: true
         api_key: $GITHUB_TOKEN
-        on:
-          branch: main
+        #on:
+        #  branch: main
