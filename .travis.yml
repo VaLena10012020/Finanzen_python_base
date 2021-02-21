@@ -40,5 +40,5 @@ jobs:
         provider: releases
         skip_cleanup: true
         api_key: $GITHUB_TOKEN
-        #on:
-        #  branch: main
+        on:
+          branch: main
