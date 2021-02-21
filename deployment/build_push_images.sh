@@ -3,6 +3,11 @@
 set -ev # exit immediately in case of error, verbose mode
 set -x # print all executed commands (=debug mode)
 
+if [[ "$TRAVIS_TAG" = "" ]]; then
+  echo "TAVIS_TAG not set";
+  exit 1;
+fi
+
 
 echo "=== Get latest docker image ==="
 # login to aws ecr
@@ -15,9 +20,9 @@ docker pull ${ECR_REGISTRY}/${ECR_REPOSITORY}:main || true
 echo "=== Build python and pyjava docker image ==="
 
 docker build --pull=true --cache-from ${ECR_REGISTRY}/${ECR_REPOSITORY}:main \
-  -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:python -f Dockerfiles/Dockerfile_python .
+  -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:python-${TRAVIS_TAG} -f Dockerfiles/Dockerfile_python .
 
-docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:pyjava -f Dockerfiles/Dockerfile_pyjava \
+docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:pyjava-${TRAVIS_TAG} -f Dockerfiles/Dockerfile_pyjava \
   --build-arg ECR_REGISTRY=${ECR_REGISTRY} --build-arg ECR_REPOSITORY=${ECR_REPOSITORY} .
 
 # to do add test script for docker image
