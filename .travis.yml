@@ -3,7 +3,7 @@ language: python
 python: "3.8"
 cache: pip
 
-before_install:
+install:
   - pip install awscli
   - pip install -r requirements/dev.txt
   - python setup.py install
@@ -16,6 +16,7 @@ jobs:
         - pytest
 
     - stage: Image deployment
+      script: skip
       deploy:
         provider: script
         skip_cleanup: true
@@ -26,6 +27,7 @@ jobs:
           all_branches: true
 
     - stage: Github release
+      script: skip
       before_deploy:
         - ./deployment/tag_commit.sh
 
