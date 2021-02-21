@@ -3,31 +3,42 @@ language: python
 python: "3.8"
 cache: pip
 
-install:
+before_install:
   - pip install awscli
+
+install:
   - pip install -r requirements/dev.txt
   - python setup.py install
 
-script:
-  - flake8
-  - pytest
+jobs:
+  include:
+    - stage: Test
+      script:
+        - flake8
+        - pytest
 
-before_deploy:
-  - git config --local user.name "travis"
-  - git config --local user.email "travis"
-  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
-  - git tag $TRAVIS_TAG
+    - stage: Image deployment
+      install: skip
+      script: skip
+      deploy:
+        provider: script
+        skip_cleanup: true
+        access_key_id: $AWS_ACCESS_KEY_ID
+        secret_access_key: $AWS_SECRET_ACCESS_KEY
+        script: ./deployment/build_push_images.sh
+        on:
+          all_branches: true
 
-deploy:
-  - provider: releases
-    skip_cleanup: true
-    api_key: $GITHUB_TOKEN
-    on:
-      branch: main
-  - provider: script
-    skip_cleanup: true
-    access_key_id: $AWS_ACCESS_KEY_ID
-    secret_access_key: $AWS_SECRET_ACCESS_KEY
-    script: ./build_push_images.sh
-    on:
-      all_branches: true
+    - stage: Github release
+      before_install: skip
+      install: skip
+      script: skip
+      before_deploy:
+        - ./deployment/tag_commit.sh
+
+      deploy:
+        provider: releases
+        skip_cleanup: true
+        api_key: $GITHUB_TOKEN
+        on:
+          branch: main
