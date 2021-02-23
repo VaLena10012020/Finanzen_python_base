@@ -29,6 +29,6 @@ docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:pyjava-${TRAVIS_TAG} -f Docker
 
 echo "=== Push docker images to AWS ECR ==="
 
-docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:python
+docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:python-${TRAVIS_TAG}
 
-docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:pyjava
+docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:pyjava-${TRAVIS_TAG}
