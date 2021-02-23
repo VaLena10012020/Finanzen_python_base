@@ -6,7 +6,6 @@ echo "=== Get latest release version ==="
 git fetch --tags
 
 RELEASE=`git describe --abbrev=0 --tags --match "v*"`
-RELEASE_PARTS=(${RELEASE//./ })
 
 echo "=== Create new release version ==="
 
@@ -18,7 +17,7 @@ else
   PATCH=0
 fi
 
-export NEW_RELEASE="v$MAJOR.$MINOR.$PATCH"
+NEW_RELEASE="v$MAJOR.$MINOR.$PATCH"
 
 echo "=== Supersede $RELEASE with $NEW_RELEASE ==="
 

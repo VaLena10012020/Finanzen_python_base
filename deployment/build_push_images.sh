@@ -3,6 +3,7 @@
 set -ev # exit immediately in case of error, verbose mode
 set -x # print all executed commands (=debug mode)
 
+NEW_RELEASE=`git describe --abbrev=0 --tags --match "v*"`
 
 echo "=== Get latest docker image ==="
 # login to aws ecr
