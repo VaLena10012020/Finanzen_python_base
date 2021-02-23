@@ -29,7 +29,7 @@ jobs:
         skip_cleanup: true
         api_key: $GITHUB_TOKEN
         on:
-          condition: $TRAVIS_TAG != ""
+          branch: main
 
     - stage: Image deployment
       install: skip
@@ -41,4 +41,4 @@ jobs:
         secret_access_key: $AWS_SECRET_ACCESS_KEY
         script: ./deployment/build_push_images.sh
         on:
-          condition: $TRAVIS_TAG != ""
+          branch: main
