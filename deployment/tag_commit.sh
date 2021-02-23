@@ -20,5 +20,3 @@ NEW_RELEASE="v$MAJOR.$MINOR.$PATCH"
 echo "=== Supersede $RELEASE with $NEW_RELEASE ==="
 
 git tag ${NEW_RELEASE}
-
-echo "=== GIT_TAG is $GIT_TAG ==="
