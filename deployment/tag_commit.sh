@@ -13,7 +13,12 @@ echo "=== Create new release version ==="
 
 MAJOR=$(date +'%y')
 MINOR=$(date +'%W')
-PATCH=$((RELEASE_PARTS[2] + 1))
+if MINOR = RELEASE_PARTS[1]
+then
+  PATCH=$((RELEASE_PARTS[2] + 1))
+else:
+  PATCH=0
+fi
 
 NEW_RELEASE="v$MAJOR.$MINOR.$PATCH"
 
