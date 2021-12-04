@@ -21,6 +21,10 @@ docker build --pull=true --cache-from ${ECR_REGISTRY}/${ECR_REPOSITORY}:main \
 docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:pyjava-${NEW_RELEASE} -f Dockerfiles/Dockerfile_pyjava \
   --build-arg ECR_REGISTRY=${ECR_REGISTRY} --build-arg ECR_REPOSITORY=${ECR_REPOSITORY} .
 
+docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:python_lambda-${NEW_RELEASE}
+
+docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:pyjava_lambda-${NEW_RELEASE} -f Dockerfiles/Dockerfile_pyjava_lambda .
+
 # to do add test script for docker image
 
 echo "=== Push docker images to AWS ECR ==="
@@ -28,3 +32,5 @@ echo "=== Push docker images to AWS ECR ==="
 docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:python-${NEW_RELEASE}
 
 docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:pyjava-${NEW_RELEASE}
+
+docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:pyjava_lambda-${NEW_RELEASE}

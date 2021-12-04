@@ -1,0 +1,17 @@
+FROM amazon/aws-lambda-python:3.8 AS base
+
+FROM base as builder
+
+RUN mkdir /install
+
+WORKDIR /tmp
+
+COPY . .
+
+ARG GITHUB_TOKEN
+
+RUN pip install --prefix=/install .
+
+FROM base
+
+COPY --from=builder /install /usr/local
